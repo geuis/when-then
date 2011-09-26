@@ -14,7 +14,7 @@ Suppose your app needs to do several asynchronous requests, but you want to work
 When-Then lets you pass any number of functions as arguments, such as asynchronous requests, followed by a chained then() function that gets passed the final results.
 
 ####Examples
-```
+```javascript
 //#### TEST CASE 1 ####
 when(
     function(pass){
