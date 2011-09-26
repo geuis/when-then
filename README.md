@@ -15,73 +15,73 @@ When-Then lets you pass any number of functions as arguments, such as asynchrono
 
 ####Examples
 ```
-    //#### TEST CASE 1 ####
-    when(
-        function(pass){
-            pass(2);
-        },
-        function(pass){
+//#### TEST CASE 1 ####
+when(
+    function(pass){
+        pass(2);
+    },
+    function(pass){
 
-            setTimeout(function(){
-                pass(1000);
-            }, 1000);
+        setTimeout(function(){
+            pass(1000);
+        }, 1000);
 
-        },
-        function(){
-            
-            setTimeout(function(){
-                pass(100);
-            }, 100);
+    },
+    function(){
+        
+        setTimeout(function(){
+            pass(100);
+        }, 100);
 
-        },
-        function(){
-            
-            setTimeout(function(){
-                pass(2000);
-            }, 2000);
+    },
+    function(){
+        
+        setTimeout(function(){
+            pass(2000);
+        }, 2000);
 
-        }
-    )
-    .then(function(results){
-        console.log(results);
-    })
-
-
-
-    //#### TEST CASE 2 (Node.js required) ####
-    var http = require('http');
-
-    var get = function(url, pass){
-        http.get({ host: url, port: 80 }, function(res){
-            var body = [];
-            res.on('data', function(chunk){
-                body.push(chunk);
-            })
-            .on('end', function(){
-                
-                pass(body.join(''));
-                
-            });
-        })
-        .on('error', function(err){
-            pass(err);
-        });
     }
+)
+.then(function(results){
+    console.log(results);
+})
 
-    when( 
-        function(pass){
-            get('www.google.com', pass);
-        },
-        function(pass){
-            get('news.ycombinator.com', pass);
-        },
-        function(pass){
-            get('io9.com', pass);
-        }
-    )
-    .then(function(results){
 
-        console.log(results);
 
+//#### TEST CASE 2 (Node.js required) ####
+var http = require('http');
+
+var get = function(url, pass){
+    http.get({ host: url, port: 80 }, function(res){
+        var body = [];
+        res.on('data', function(chunk){
+            body.push(chunk);
+        })
+        .on('end', function(){
+            
+            pass(body.join(''));
+            
+        });
+    })
+    .on('error', function(err){
+        pass(err);
     });
+}
+
+when( 
+    function(pass){
+        get('www.google.com', pass);
+    },
+    function(pass){
+        get('news.ycombinator.com', pass);
+    },
+    function(pass){
+        get('io9.com', pass);
+    }
+)
+.then(function(results){
+
+    console.log(results);
+
+});
 ```
