@@ -13,37 +13,49 @@ Suppose your app needs to do several asynchronous requests, but you want to work
 
 When-Then lets you pass any number of functions as arguments, such as asynchronous requests, followed by a chained then() function that gets passed the final results.
 
+The 'pass' function is made available to your asyncronous functions from when(). Your functions pass two parameters to pass(), being first the key you later want to access the results in, and the data being the second.
+
+After the then() function is executed, you can access the results of your async functions using the key that you originally defined in each pass() function.
+
 ####Examples
 ```javascript
 //#### TEST CASE 1 ####
 when(
     function(pass){
-        pass(2);
+        pass('tm0', 2);
     },
     function(pass){
 
         setTimeout(function(){
-            pass(1000);
+            pass('tm1', 1000);
         }, 1000);
 
     },
     function(){
         
         setTimeout(function(){
-            pass(100);
+            pass('tm2', 100);
         }, 100);
 
     },
     function(){
         
         setTimeout(function(){
-            pass(2000);
+            pass('tm3', 2000);
         }, 2000);
 
     }
 )
 .then(function(results){
     console.log(results);
+    
+    // returns an object 
+    //{
+    //    tm0: 2,
+    //    tm1: 1000,
+    //    tm2: 100,
+    //    tm3: 2000,
+    //}
 })
 
 
@@ -59,7 +71,7 @@ var get = function(url, pass){
         })
         .on('end', function(){
             
-            pass(body.join(''));
+            pass(url, body.join(''));
             
         });
     })
@@ -82,6 +94,13 @@ when(
 .then(function(results){
 
     console.log(results);
+
+    //returns an object
+    //{
+    //    'www.google.com': 'data would be here',
+    //    'www.ycombinator.com': 'data would be here',
+    //    'io9.com': 'data would be here'
+    //}
 
 });
 ```
