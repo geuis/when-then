@@ -1,3 +1,5 @@
+//License: MIT License(http://opensource.org/licenses/mit-license.php)
+
 var when = function(){
     if( !(this instanceof when) ) return new when(arguments); //return new instance of itself
 
