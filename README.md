@@ -31,14 +31,14 @@ when(
         }, 1000);
 
     },
-    function(){
+    function(pass){
         
         setTimeout(function(){
             pass('tm2', 100);
         }, 100);
 
     },
-    function(){
+    function(pass){
         
         setTimeout(function(){
             pass('tm3', 2000);
